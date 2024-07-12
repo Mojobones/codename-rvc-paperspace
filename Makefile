@@ -3,8 +3,8 @@
 
 help: ## Show this help and exit
 	@grep -hE '^[A-Za-z0-9_ \-]*?:.*##.*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
-
-install: ## Install dependencies (Do everytime you start up a paperspace machine)
+	
+setup:
 	@echo 'Installing pyenv...'
 	@curl https://pyenv.run | bash
 	@echo 'Updating .bashrc...'
@@ -14,6 +14,8 @@ install: ## Install dependencies (Do everytime you start up a paperspace machine
 	@echo '.bashrc updated.'
 	@echo 'Sourcing .bashrc and installing Python...'
 	@bash -c "source ~/.bashrc && exec bash; pyenv install 3.10.6 && pyenv global 3.10.6 && echo 'Python 3.10.6 installed and set as global.'"
+
+install: ## Install dependencies (Do everytime you start up a paperspace machine)
 	apt-get -y install build-essential python3-dev ffmpeg
 	pip install --upgrade setuptools wheel
 	pip install pip==24.0	
