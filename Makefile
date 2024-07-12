@@ -10,10 +10,13 @@ setup:
 	@echo 'Updating .bashrc...'
 	@grep -qxF 'export PYENV_ROOT="$$HOME/.pyenv"' ~/.bashrc || echo 'export PYENV_ROOT="$$HOME/.pyenv"' >> ~/.bashrc
 	@grep -qxF '[[ -d $$PYENV_ROOT/bin ]] && export PATH="$$PYENV_ROOT/bin:$$PATH"' ~/.bashrc || echo '[[ -d $$PYENV_ROOT/bin ]] && export PATH="$$PYENV_ROOT/bin:$$PATH"' >> ~/.bashrc
+	@grep -qxF 'eval "$$(pyenv init --path)"' ~/.bashrc || echo 'eval "$$(pyenv init --path)"' >> ~/.bashrc
 	@grep -qxF 'eval "$$(pyenv init -)"' ~/.bashrc || echo 'eval "$$(pyenv init -)"' >> ~/.bashrc
 	@echo '.bashrc updated.'
 	@echo 'Sourcing .bashrc and installing Python...'
-	@bash -c "source ~/.bashrc && exec bash; pyenv install 3.10.6 && pyenv global 3.10.6 && echo 'Python 3.10.6 installed and set as global.'"
+	@bash -c "source ~/.bashrc && pyenv install 3.10.6 && pyenv global 3.10.6 && pyenv rehash && echo 'Python 3.10.6 installed and set as global.'"
+	@echo 'Verifying Python version...'
+	@bash -c "source ~/.bashrc && python --version"
 
 install: ## Install dependencies (Do everytime you start up a paperspace machine)
 	apt-get -y install build-essential python3-dev ffmpeg
