@@ -1720,15 +1720,7 @@ with gr.Blocks(title=" Codename-RVC-Fork 🍇 ") as app:
                 gr.Markdown(traceback.format_exc())
 
     try:
-        if config.iscolab:
-            app.queue(max_size=1022).launch(share=True, max_threads=511)
-        else:
-            app.queue(max_size=1022).launch(
-                max_threads=511,
-                server_name="0.0.0.0",
-                inbrowser=not config.noautoopen,
-                server_port=8000,
-                quiet=True,
-            )
+        app.queue(max_size=1022).launch(share=True)
+
     except Exception as e:
         logger.error(str(e))
