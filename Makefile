@@ -1,10 +1,17 @@
 .PHONY:
 .ONESHELL:
+.RECIPEPREFIX +=
 
 help: ## Show this help and exit
 	@grep -hE '^[A-Za-z0-9_ \-]*?:.*##.*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 install: ## Install dependencies (Do everytime you start up a paperspace machine)
+	
+	@echo 'Updating .bashrc...'
+	@grep -qxF 'export PYENV_ROOT="$$HOME/.pyenv"' ~/.bashrc || echo 'export PYENV_ROOT="$$HOME/.pyenv"' >> ~/.bashrc
+	@grep -qxF '[[ -d $$PYENV_ROOT/bin ]] && export PATH="$$PYENV_ROOT/bin:$$PATH"' ~/.bashrc || echo '[[ -d $$PYENV_ROOT/bin ]] && export PATH="$$PYENV_ROOT/bin:$$PATH"' >> ~/.bashrc
+	@grep -qxF 'eval "$$(pyenv init -)"' ~/.bashrc || echo 'eval "$$(pyenv init -)"' >> ~/.bashrc
+	@echo '.bashrc updated.'
 	apt-get -y install build-essential python3-dev ffmpeg
 	pip install --upgrade setuptools wheel
 	pip install pip==24.0	
