@@ -7,9 +7,10 @@ help: ## Show this help and exit
 install: ## Install dependencies (Do everytime you start up a paperspace machine)
 	apt-get -y install build-essential python3-dev ffmpeg
 	pip install --upgrade setuptools wheel
-	pip install --upgrade pip
+	pip install pip==24.0	
 	pip install faiss-gpu fairseq gradio ffmpeg ffmpeg-python praat-parselmouth pyworld numpy==1.23.5 numba==0.56.4 librosa==0.9.1
-	pip install -r requirements.txt
+    pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+	pip install -r requirements/RVC/reclists-RVCrequirements.txt
 	pip install --upgrade lxml
 	pip install --upgrade ffmpy
 	pip install protobuf==3.20
